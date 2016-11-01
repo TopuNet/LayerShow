@@ -1,0 +1,22 @@
+{
+  "name": "TopuNet-LayerShow",
+  "version": "1.0.1",
+  "description": "弹层显示图片（支持多张）或图文内容",
+  "main": "widget/lib/LayerShow.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TopuNet/LayerShow.git"
+  },
+  "keywords": [
+    "topu.net"
+  ],
+  "author": "Topu.net",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TopuNet/LayerShow/issues"
+  },
+  "homepage": "https://github.com/TopuNet/LayerShow#readme"
+}
