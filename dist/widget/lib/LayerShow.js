@@ -1,7 +1,7 @@
 /*
-	1.0.1
-	高京
-	2016-10-25
+    1.0.2
+    高京
+    2016-10-25
 */
 var LayerShow = {
     // 图片尺寸占window的比例
@@ -330,37 +330,32 @@ var LayerShow = {
 
     // 显示弹层
     /*
-天安门上太阳升
-我爱北京天安门
-天安门上太阳升
-我爱北京天安门
-天安门上太阳升
-		opt = {
-			z_index: 弹层的z-index。图片/图文内容层为z_index+1。默认400
-			bg_color： 背景层16进制颜色。默认#000000
-			bg_opacity: 背景层透明度，0～1。默认0.8
-			showKind: 1-图片 | 2-HTML。默认1
-			Pics: showKind=1时有效。图片路径列表，数组。如 ["/images/001.jpg","/images/002.png"]。无默认值
-			Pics_scroll_speed: showKind=1时有效。图片切换时的速度。毫秒。默认500。移动端建议设置为100-200，过慢会有卡顿的现象
-			Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
-			Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
-			callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
-			info_content: showKind=2时有效，装载内容。无默认
-			info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
-			info_box_height_per: showKind=2时有效，内容盒高度百分比。默认90
-			info_box_radius: showKind=2时有效，内容盒是否圆角。默认true
+        opt = {
+            z_index: 弹层的z-index。图片/图文内容层为z_index+1。默认400
+            bg_color: 背景层16进制颜色。默认#000000
+            bg_opacity: 背景层透明度，0～1。默认0.8
+            showKind: 1-图片 | 2-HTML。默认1
+            Pics: showKind=1时有效。图片路径列表，数组。如 ["/images/001.jpg","/images/002.png"]。无默认值
+            Pics_scroll_speed: showKind=1时有效。图片切换时的速度。毫秒。默认500。移动端建议设置为100-200，过慢会有卡顿的现象
+            Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
+            Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
+            callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
+            info_content: showKind=2时有效，装载内容。无默认
+            info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
+            info_box_height_per: showKind=2时有效，内容盒高度百分比。默认90
+            info_box_radius: showKind=2时有效，内容盒是否圆角。默认true
             info_box_bg: showKind=2时有效，内容盒背景。默认"#ffffff"
             info_box_padding_px: showKind=2时有效，内容盒padding。默认20
             info_box_fontSize: showKind=2时有效，内容盒字体大小。默认"14px"
             info_box_fontColor: showKind=2时有效，内容盒字体颜色。默认"#333"
             info_box_lineHeight: showKind=2时有效，内容盒行间距。默认"30px"
             info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）。默认true
-			Pics_close_show: true/false。显示关闭按钮。默认true
-			Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
-			callback_before: 弹层前回调。如显示loading层。无默认
-			callback_success: 弹层成功回调。如关闭loading层。无默认
-			callback_close: 关闭弹层后的回调。没想好如什么。无默认
-		}
+            Pics_close_show: true/false。显示关闭按钮。默认true
+            Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
+            callback_before: 弹层前回调。如显示loading层。无默认
+            callback_success: 弹层成功回调。如关闭loading层。无默认
+            callback_close: 关闭弹层后的回调。没想好如什么。无默认
+        }
     */
     show: function(opt) {
         var _this = this;
@@ -586,6 +581,7 @@ var LayerShow = {
             _this.dom_info_p.html("");
 
             // 隐藏弹层
+            _this.dom_close_box.fadeOut(200);
             _this.dom_info_box.fadeOut(200, function() {
                 if (reShow) {
                     _this.show.apply(_this, [_this.Paras]);

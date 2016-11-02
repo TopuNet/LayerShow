@@ -1,5 +1,5 @@
 /*
-	1.0.1
+	1.0.2
 	高京
 	2016-10-25
 */
@@ -581,6 +581,7 @@ var LayerShow = {
             _this.dom_info_p.html("");
 
             // 隐藏弹层
+            _this.dom_close_box.fadeOut(200);
             _this.dom_info_box.fadeOut(200, function() {
                 if (reShow) {
                     _this.show.apply(_this, [_this.Paras]);
