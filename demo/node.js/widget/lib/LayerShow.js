@@ -1,5 +1,5 @@
 /*
-	1.0.2
+	1.0.3
 	高京
 	2016-10-25
 */
@@ -314,7 +314,7 @@ var LayerShow = {
         $(window).unbind("resize").on("resize", function() {
             if (++resize_n > 1)
                 return;
-            if (_this.dom_bg_layer.css("display") != "none") {
+            if (_this.dom_bg_layer.width() !== 0) {
                 setTimeout(function() {
                     if (_this.isIE678() && _this.Paras.showKind == 1) {
                         _this.close.apply(_this, [true]);

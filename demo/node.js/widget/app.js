@@ -1,6 +1,6 @@
 define(["lib/LayerShow", "lib/jquery.min"], function($LayerShow) {
 
-    $("input").on("touchstart mousedown", function(e) {
+    $("input[type=button]").on("touchstart mousedown", function(e) {
         e.preventDefault();
         var opt = {
             Pics: ["/images/002.jpg", "/images/003.jpg", "/images/004.jpg", "/images/001.jpg", "/images/002.jpg", "/images/003.jpg", "/images/004.jpg", "/images/002.jpg", "/images/003.jpg", "/images/004.jpg"],
