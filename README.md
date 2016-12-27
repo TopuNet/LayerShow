@@ -50,8 +50,11 @@ requireJS引用
 				callback_close: 关闭弹层后的回调。没想好如什么。无默认
 			};
 
+			// 显示
             LayerShow.show(opt);
 
+            // 关闭
+            LayerShow.close();
 
 更新历史：
 -------------
