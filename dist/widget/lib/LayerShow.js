@@ -1,5 +1,5 @@
 /*
-    1.0.3
+    1.0.5
     高京
     2016-10-25
 */
@@ -313,7 +313,7 @@ var LayerShow = {
 
         // 监听窗口resize
         var resize_n = 0;
-        $(window).unbind("resize").on("resize", function() {
+        var resize_do = function() {
             if (++resize_n > 1)
                 return;
             if (_this.dom_bg_layer.width() !== 0) {
@@ -326,7 +326,8 @@ var LayerShow = {
                     resize_n = 0;
                 }, 0);
             }
-        });
+        };
+        $(window).unbind("resize", resize_do).bind("resize", resize_do);
 
     },
 

@@ -1,4 +1,4 @@
-# LayerShow 插件 v1.0.4
+# LayerShow 插件 v1.0.5
 ###弹层显示图片（支持多张）或图文内容
 ###安装：npm install TopuNet-LayerShow
 
@@ -58,6 +58,10 @@ requireJS引用
 
 更新历史：
 -------------
+v1.0.5
+
+		1. 解决弹层后，$(window).unbind("resize")影响原先页面的resize监听的bug
+
 v1.0.4
 
 		1. 将弹层的遮罩背景尺寸改为100%宽和高，解决移动端键盘影响弹层的bug
