@@ -59,7 +59,7 @@ requireJS引用
 
 更新历史：
 -------------
-v1.0.7
+v1.1.1
 
 		1. LayerShow.js中不再强制依赖jroll，如需用jroll做内容盒滚动，则需在页面中引用或依赖jroll.js
 
