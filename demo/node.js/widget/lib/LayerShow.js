@@ -1,5 +1,5 @@
 /*
-    1.0.5
+    1.0.6
     高京
     2016-10-25
 */
@@ -485,11 +485,11 @@ var LayerShow = {
                             _this.resize.apply(_this);
 
                             // 显示弹层
-                            if (_this.Paras.callback_success)
-                                _this.Paras.callback_success();
-
                             _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
-                            _this.dom_image_box.fadeIn(200, function() {});
+                            _this.dom_image_box.fadeIn(200, function() {
+                                if (_this.Paras.callback_success)
+                                    _this.Paras.callback_success();
+                            });
                             _this.dom_close_box.fadeIn(200);
 
                         } else {
@@ -527,9 +527,6 @@ var LayerShow = {
             _this.resize.apply(_this);
 
             // 显示弹层
-            if (_this.Paras.callback_success)
-                _this.Paras.callback_success();
-
             _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
             _this.dom_info_box.fadeIn(200, function() {
                 // 设置JRoll滚动
@@ -539,6 +536,9 @@ var LayerShow = {
                     else
                         _this.jroll_obj = new JRoll("#info_wrapper");
                 }
+                // 成功回调
+                if (_this.Paras.callback_success)
+                    _this.Paras.callback_success();
             });
             _this.dom_close_box.fadeIn(200);
 

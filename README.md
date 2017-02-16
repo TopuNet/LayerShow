@@ -1,4 +1,4 @@
-# LayerShow 插件 v1.0.5
+# LayerShow 插件 v1.0.6
 ###弹层显示图片（支持多张）或图文内容
 ###安装：npm install TopuNet-LayerShow
 
@@ -58,6 +58,10 @@ requireJS引用
 
 更新历史：
 -------------
+v1.0.6
+
+		1. 修改弹层成功回调的执行位置（fadeIn完成后触发），解决内容盒执行过早导致在回调中调用内容盒内的元素时，可能出现的bug（如宽高不对）
+
 v1.0.5
 
 		1. 解决弹层后，$(window).unbind("resize")影响原先页面的resize监听的bug
