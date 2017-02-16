@@ -18,7 +18,8 @@
 
 requireJS引用
 
-        依赖LayerShow.js和(jquery.min.js#1.x 或 zepto.js)，成功后返回对象依赖LayerShow。
+        1. 依赖LayerShow.js和(jquery.min.js#1.x 或 zepto.js)，成功后返回对象依赖LayerShow。
+        2. 如需要jroll，则在页面中依赖jroll
 
 调用方法：
 --------------
@@ -42,7 +43,7 @@ requireJS引用
 	            info_box_fontSize: showKind=2时有效，内容盒字体大小。默认"14px"
 	            info_box_fontColor: showKind=2时有效，内容盒字体颜色。默认"#333"
 	            info_box_lineHeight: showKind=2时有效，内容盒行间距。默认"30px"
-	            info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）。默认true
+	            info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）。如使用，则需要依赖或引用jroll.js。默认true
 				Pics_close_show: true/false。显示关闭按钮。默认true
 				Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
 				callback_before: 弹层前回调。如显示loading层。无默认
