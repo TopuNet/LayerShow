@@ -1,4 +1,4 @@
-# LayerShow 插件 v1.1.1
+# LayerShow 插件 v1.1.2
 ###弹层显示图片（支持多张）或图文内容
 ###安装：npm install TopuNet-LayerShow
 
@@ -24,6 +24,10 @@ requireJS引用
 调用方法：
 --------------
 
+			// AMD规范下，须执行且只需执行一次：
+			LayerShow.init();
+
+			// 显示
             var opt = {
 				z_index: 弹层的z-index。图片/图文内容层为z_index+1。默认400
 				bg_color: 背景层16进制颜色。默认#000000
@@ -43,15 +47,14 @@ requireJS引用
 	            info_box_fontSize: showKind=2时有效，内容盒字体大小。默认"14px"
 	            info_box_fontColor: showKind=2时有效，内容盒字体颜色。默认"#333"
 	            info_box_lineHeight: showKind=2时有效，内容盒行间距。默认"30px"
-	            info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）。如使用，则需要依赖或引用jroll.js。默认true
+	            info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）如使用，则需要依赖或引用jroll.js。默认true
+	            JRoll_obj: JRoll对象。不使用JRoll做内容盒滚动，可不传。
 				Pics_close_show: true/false。显示关闭按钮。默认true
 				Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
 				callback_before: 弹层前回调。如显示loading层。无默认
 				callback_success: 弹层成功回调。如关闭loading层。无默认
 				callback_close: 关闭弹层后的回调。没想好如什么。无默认
 			};
-
-			// 显示
             LayerShow.show(opt);
 
             // 关闭
@@ -59,6 +62,11 @@ requireJS引用
 
 更新历史：
 -------------
+v1.1.2
+
+		1. 如使用JRoll做内容盒滚动，则需传入JRoll对象
+		2. 修改AMD规范下的调用方法（见上文“调用方法”）
+
 v1.1.1
 
 		1. LayerShow.js中不再强制依赖jroll，如需用jroll做内容盒滚动，则需在页面中引用或依赖jroll.js

@@ -1,5 +1,5 @@
 /*
-    1.1.1
+    1.1.2
     高京
     2016-10-25
 */
@@ -12,10 +12,7 @@ var LayerShow = {
     image_sliding: false,
 
     // 初始化
-    init: function($JRoll) {
-
-        if ($JRoll)
-            this.$JRoll = $JRoll;
+    init: function() {
 
         // 创建DOM
         this.create_dom.apply(this);
@@ -352,7 +349,8 @@ var LayerShow = {
             info_box_fontSize: showKind=2时有效，内容盒字体大小。默认"14px"
             info_box_fontColor: showKind=2时有效，内容盒字体颜色。默认"#333"
             info_box_lineHeight: showKind=2时有效，内容盒行间距。默认"30px"
-            info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）。默认true
+            info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）如使用，则需要依赖或引用jroll.js。默认true
+            JRoll_obj: JRoll对象。不使用JRoll做内容盒滚动，可不传。
             Pics_close_show: true/false。显示关闭按钮。默认true
             Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
             callback_before: 弹层前回调。如显示loading层。无默认
@@ -530,11 +528,8 @@ var LayerShow = {
             _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
             _this.dom_info_box.fadeIn(200, function() {
                 // 设置JRoll滚动
-                if (_this.Paras.info_box_use_JRoll) {
-                    if (_this.$JRoll)
-                        _this.jroll_obj = new _this.$JRoll("#info_wrapper");
-                    else
-                        _this.jroll_obj = new JRoll("#info_wrapper");
+                if (_this.Paras.info_box_use_JRoll && _this.Paras.JRoll_obj) {
+                    _this.jroll_obj = new _this.Paras.JRoll_obj("#info_wrapper");
                 }
                 // 成功回调
                 if (_this.Paras.callback_success)
@@ -730,8 +725,7 @@ var LayerShow = {
 };
 
 if (typeof define === "function" && define.amd) {
-    define(function($JRoll) {
-        LayerShow.init($JRoll);
+    define(function() {
         return LayerShow;
     });
 } else {
