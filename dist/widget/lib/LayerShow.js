@@ -1,5 +1,5 @@
 /*
-    1.0.6
+    1.0.7
     高京
     2016-10-25
 */
@@ -730,7 +730,7 @@ var LayerShow = {
 };
 
 if (typeof define === "function" && define.amd) {
-    define(["lib/jroll"], function($JRoll) {
+    define(function($JRoll) {
         LayerShow.init($JRoll);
         return LayerShow;
     });
