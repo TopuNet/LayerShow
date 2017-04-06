@@ -1,4 +1,4 @@
-# LayerShow 插件 v1.1.2
+# LayerShow 插件 v1.2.1
 ###弹层显示图片（支持多张）或图文内容
 ###安装：npm install TopuNet-LayerShow
 
@@ -34,6 +34,7 @@ requireJS引用
 				bg_opacity: 背景层透明度，0～1。默认0.8
 				showKind: 1-图片 | 2-HTML。默认1
 				Pics: showKind=1时有效。图片路径列表，数组。如 ["/images/001.jpg","/images/002.png"]。无默认值
+				Pics_show_index: 默认显示图片的序号，值大于等于图片数组的length时无效。默认0
 				Pics_scroll_speed: showKind=1时有效。图片切换时的速度。毫秒。默认500。移动端建议设置为100-200，过慢会有卡顿的现象
 				Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
 				Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
@@ -62,6 +63,10 @@ requireJS引用
 
 更新历史：
 -------------
+v1.2.1
+
+		1. 增加参数 Pics_show_index
+
 v1.1.2
 
 		1. 如使用JRoll做内容盒滚动，则需传入JRoll对象

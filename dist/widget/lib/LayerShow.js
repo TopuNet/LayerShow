@@ -1,5 +1,5 @@
 /*
-    1.1.2
+    1.2.1
     高京
     2016-10-25
 */
@@ -367,6 +367,7 @@ var LayerShow = {
             bg_opacity: 0.8,
             showKind: 1,
             Pics: [],
+            Pics_show_index: 3,
             Pics_scroll_speed: 500,
             Pics_arrow_left: "/inc/LayerShow_arrow_left.png",
             Pics_arrow_right: "/inc/LayerShow_arrow_right.png",
@@ -397,6 +398,22 @@ var LayerShow = {
         // 装载图片或内容
         if (_this.Paras.showKind == 1) {
             if (_this.Paras.Pics.length > 0) {
+
+                // 重新组织Pics
+                if (_this.Paras.Pics_show_index > 0 && _this.Paras.Pics_show_index < _this.Paras.Pics.length) {
+                    (function() {
+                        var Pics_temp = _this.Paras.Pics;
+                        _this.Paras.Pics = [];
+                        var i = _this.Paras.Pics_show_index,
+                            len = Pics_temp.length;
+                        for (; i < len; i++) {
+                            _this.Paras.Pics.push(Pics_temp[i]);
+                        }
+                        for (i = 0; i < _this.Paras.Pics_show_index; i++) {
+                            _this.Paras.Pics.push(Pics_temp[i]);
+                        }
+                    })();
+                }
 
                 // 插入li到ul。监听li点击
                 var insert_li = function() {
@@ -726,7 +743,6 @@ var LayerShow = {
 
 if (typeof define === "function" && define.amd) {
     define(function() {
-        LayerShow.init();
         return LayerShow;
     });
 } else {
