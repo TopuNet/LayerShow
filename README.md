@@ -1,4 +1,4 @@
-# LayerShow 插件 v1.2.1
+# LayerShow 插件 v1.2.2
 ###弹层显示图片（支持多张）或图文内容
 ###安装：npm install TopuNet-LayerShow
 
@@ -53,7 +53,7 @@ requireJS引用
 				Pics_close_show: true/false。显示关闭按钮。默认true
 				Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
 				callback_before: 弹层前回调。如显示loading层。无默认
-				callback_success: 弹层成功回调。如关闭loading层。无默认
+				callback_success: 弹层成功————此时只加载了第一章图片————回调function(li)。li为showKind=1时加载的第一且是唯一一张图片的li盒。如关闭loading层。无默认
 				callback_close: 关闭弹层后的回调。没想好如什么。无默认
 			};
             LayerShow.show(opt);
@@ -63,6 +63,13 @@ requireJS引用
 
 更新历史：
 -------------
+v1.2.2
+
+		优化代码和流程逻辑，提高性能和效率，并修改bug
+		1. 弹层前预加载第一张图片，加载完成后弹层，并显示关闭按钮
+		2. 弹层后预加载除第一张图片外的所有图片，全部加载完成后，显示左右切换箭头
+		3. 弹层成功的回调方法传入参数li————加载的第一且是唯一一张图片的li盒（仅showKind=1时有效）
+
 v1.2.1
 
 		1. 增加参数 Pics_show_index

@@ -1,5 +1,5 @@
 /*
-    1.2.1
+    1.2.2
     高京
     2016-10-25
 */
@@ -433,7 +433,7 @@ var LayerShow = {
 
                 // 图片加载成功后的回调（获得图片组中显示大小）
                 var imageLoaded_success = function() {
-
+                    var imageLoaded_success_count = 0;
                     return function($img, now_index) {
 
                         // 计算图片应显示尺寸
@@ -480,6 +480,12 @@ var LayerShow = {
 
                         if (now_index === 0) {
 
+                            // 设置弹层宽高和位置
+                            _this.resize.apply(_this);
+
+                            // 显示关闭按钮
+                            _this.dom_close_box.fadeIn(200);
+
                             // 加载其他图片
                             var i = 1,
                                 len = _this.Paras.Pics.length,
@@ -496,26 +502,29 @@ var LayerShow = {
                                 _this.imageLoad.apply(_this, [_this.Paras.Pics[i], _imageLoaded_success(i)]);
                             }
 
-                            // 设置弹层宽高和位置
-                            _this.resize.apply(_this);
-
                             // 显示弹层
                             _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
                             _this.dom_image_box.fadeIn(200, function() {
                                 if (_this.Paras.callback_success)
-                                    _this.Paras.callback_success();
+                                    _this.Paras.callback_success(li);
                             });
-                            _this.dom_close_box.fadeIn(200);
 
                         } else {
 
-                            // 重置ul宽度
-                            _this.dom_image_ul.css("width", _this.li_item_width_px * li.length + "px");
+                            if (++imageLoaded_success_count + 1 == _this.Paras.Pics.length) {
 
-                            // 显示左右箭头
-                            if (_this.dom_arrow_left_box.css("display") == "none") {
-                                _this.dom_arrow_left_box.fadeIn(200);
-                                _this.dom_arrow_right_box.fadeIn(200);
+                                // console.log("514");
+                                // console.log(++imageLoaded_success_count);
+                                // console.log($(li[now_index]).width());
+
+                                // 重置ul宽度
+                                _this.dom_image_ul.css("width", _this.li_item_width_px * li.length + "px");
+
+                                // 显示左右箭头
+                                if (_this.dom_arrow_left_box.css("display") == "none") {
+                                    _this.dom_arrow_left_box.fadeIn(200);
+                                    _this.dom_arrow_right_box.fadeIn(200);
+                                }
                             }
                         }
                     };
