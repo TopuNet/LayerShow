@@ -1,6 +1,6 @@
 # LayerShow 插件 v1.2.2
-###弹层显示图片（支持多张）或图文内容
-###安装：npm install TopuNet-LayerShow
+### 弹层显示图片（支持多张）或图文内容
+### 安装：npm install TopuNet-LayerShow
 
 文件结构：
 -------------
