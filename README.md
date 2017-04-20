@@ -1,4 +1,4 @@
-# LayerShow 插件 v1.2.2
+# LayerShow 插件 v2.1.1
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -24,8 +24,8 @@ requireJS引用
 调用方法：
 --------------
 
-			// AMD规范下，须执行且只需执行一次：
-			LayerShow.init();
+			var layershow = new LayerShow();
+			layershow.init();
 
 			// 显示
             var opt = {
@@ -56,13 +56,17 @@ requireJS引用
 				callback_success: 弹层成功————此时只加载了第一章图片————回调function(li)。li为showKind=1时加载的第一且是唯一一张图片的li盒。如关闭loading层。无默认
 				callback_close: 关闭弹层后的回调。没想好如什么。无默认
 			};
-            LayerShow.show(opt);
+            layershow.show(opt);
 
             // 关闭
-            LayerShow.close();
+            layershow.close();
 
 更新历史：
 -------------
+v2.1.1
+
+		重构。支持单页面装载多套LayerShow
+
 v1.2.2
 
 		优化代码和流程逻辑，提高性能和效率，并修改bug
