@@ -1,7 +1,23 @@
 /*
-    2.1.1
+    2.2.1
     高京
     2016-10-25
+
+    this = {
+        dom_bg_layer: 背景层,
+        dom_info_box: 内容层,
+        dom_info_p_box: 内容和段落中间层——JRoll用,
+        dom_info_p: 段落层,
+        dom_image_box: 图片层,
+        dom_close_box: 关闭层,
+        dom_close_image: 关闭图片,
+        dom_image_ul: 图片ul盒,
+        dom_image_li: 图片li盒,
+        dom_arrow_left_box: 图片左箭头盒,
+        dom_arrow_left_image: 图片左箭头,
+        dom_arrow_right_box: 图片右箭头盒,
+        dom_arrow_right_image: 图片右箭头
+    }
 */
 function LayerShow() {
     return {
@@ -12,12 +28,6 @@ function LayerShow() {
         // 标记是否正在执行图片切换
         image_sliding: false,
 
-        // 初始化
-        init: function() {
-
-            // 创建DOM
-            this.create_dom.apply(this);
-        },
         // 创建DOM
         create_dom: function() {
 
@@ -391,6 +401,10 @@ function LayerShow() {
             // IE78强制不使用JRoll
             if (_this.isIE678())
                 _this.Paras.info_box_use_JRoll = false;
+
+            // 看有没有创建dom
+            if (!_this.dom_bg_layer)
+                _this.create_dom.apply(_this);
 
             // 执行弹层前回调
             if (_this.Paras.callback_before)

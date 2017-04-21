@@ -1,8 +1,9 @@
 define(["lib/jquery.min", "lib/jroll", "lib/LayerShow"], function(nil, $JRoll, $LayerShow) {
+    var ls1 = new LayerShow();
+    var ls2 = new LayerShow();
 
     $("input[type=button]").on("touchstart mousedown", function(e) {
         e.preventDefault();
-
         var opt = {
             z_index: 800,
             bg_color: "#000",
@@ -38,11 +39,7 @@ define(["lib/jquery.min", "lib/jroll", "lib/LayerShow"], function(nil, $JRoll, $
             callback_close: function() {}
         };
 
-        var ls2 = new $LayerShow();
-        ls2.init();
-
-        var ls1 = new $LayerShow();
-        ls1.init();
         ls1.show(opt);
+
     });
 });

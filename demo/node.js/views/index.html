@@ -25,6 +25,9 @@
     <script type="text/javascript">
     $(function() {
 
+        var ls1 = new LayerShow();
+        var ls2 = new LayerShow();
+
         $("input[type=button]").on("touchstart mousedown", function(e) {
             e.preventDefault();
             var opt = {
@@ -62,11 +65,6 @@
                 callback_close: function() {}
             };
 
-            var ls2 = new LayerShow();
-            ls2.init();
-
-            var ls1 = new LayerShow();
-            ls1.init();
             ls1.show(opt);
 
         });

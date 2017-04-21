@@ -1,4 +1,4 @@
-# LayerShow 插件 v2.1.1
+# LayerShow 插件 v2.2.1
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -24,8 +24,8 @@ requireJS引用
 调用方法：
 --------------
 
+			// 创建新LayerShow实例。注意：不要反复的创建实例，每个实例会在show()之后创建一组dom
 			var layershow = new LayerShow();
-			layershow.init();
 
 			// 显示
             var opt = {
@@ -63,6 +63,10 @@ requireJS引用
 
 更新历史：
 -------------
+v2.2.1
+
+		show()之前，不再需要init()。具体见调用方法说明。
+
 v2.1.1
 
 		重构。支持单页面装载多套LayerShow
