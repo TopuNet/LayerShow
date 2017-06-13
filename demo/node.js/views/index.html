@@ -54,12 +54,16 @@
                 Pics_close_show: true,
                 Pics_close_path: "/inc/LayerShow_close.png",
                 callback_before: function() {},
-                callback_success: function() {
+                callback_success: function(li) {
+                    // console.log(li);
+
                     opt.z_index = 1000;
                     opt.bg_color = "#ff0000";
                     opt.bg_opacity = 1;
                     opt.showKind = 2;
-                    opt.callback_success = null;
+                    opt.callback_success = function(_jroll) {
+                        console.log(_jroll);
+                    };
                     ls2.show(opt);
                 },
                 callback_close: function() {}

@@ -1,5 +1,5 @@
 /*
-    2.2.1
+    2.2.2
     高京
     2016-10-25
 
@@ -572,9 +572,11 @@ function LayerShow() {
                     if (_this.Paras.info_box_use_JRoll && _this.Paras.JRoll_obj) {
                         _this.jroll_obj = new _this.Paras.JRoll_obj("#info_wrapper");
                     }
+
+                    // console.log(_this.Paras.info_box_use_JRoll, _this.jroll_obj);
                     // 成功回调
                     if (_this.Paras.callback_success)
-                        _this.Paras.callback_success();
+                        _this.Paras.callback_success(_this.jroll_obj);
                 });
                 _this.dom_close_box.fadeIn(200);
 
