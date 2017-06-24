@@ -1,5 +1,5 @@
 /*
-    2.2.4
+    2.2.5
     高京
     2016-10-25
 
@@ -299,7 +299,7 @@ function LayerShow() {
                     "margin-left": (-_this.info_box_width_px / 2) + "px",
                     "background": _this.Paras.info_box_bg,
                     "overflow-x": "hidden",
-                    "overflow-y": "hidden",
+                    "overflow-y": "auto",
                     "z-index": _this.Paras.z_index + 1
                 });
 
