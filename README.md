@@ -1,4 +1,4 @@
-# LayerShow 插件 v2.2.2
+# LayerShow 插件 v2.2.3
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -63,6 +63,12 @@ requireJS引用
 
 更新历史：
 -------------
+v2.2.3
+
+		找到了2.2.2提到的问题的原因：【demo的index.html中，在ls1弹层成功后，执行ls2弹层，在ls2弹层成功后执行_obj.scrollTo，不好使，原因没太搞明白。如果是直接执行ls2，是可行的。】
+		是因为初始化jroll时，用的是$("#wrapper_info")，但页面中其实初始化了两个LayerShow，so有两个#wrapper_info。
+		已解决。
+
 v2.2.2
 
 		1. 修改callback_success: 弹层成功(showKind=1时只加载了第一张图片)。回调function(_obj)。 showKind=1时_obj为加载的第一且是唯一一张图片的li盒；showKind=2时_obj为实例化的jroll对象；如info_box_use_JRoll为false，则_obj=undefined。无默认

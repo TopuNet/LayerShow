@@ -1,5 +1,5 @@
 /*
-    2.2.2
+    2.2.3
     高京
     2016-10-25
 
@@ -59,11 +59,8 @@ function LayerShow() {
                 })
                 .appendTo(dom_body);
 
-            // 内容和段落中间层——JRoll用
-            _this.dom_info_p_box = $(document.createElement("div")).appendTo(_this.dom_info_box);
-
             // 段落层
-            _this.dom_info_p = $(document.createElement("p")).css("margin", "0").appendTo(_this.dom_info_p_box);
+            _this.dom_info_p = $(document.createElement("p")).css("margin", "0").appendTo(_this.dom_info_box);
 
             // 图片层
             _this.dom_image_box = $(document.createElement("div"))
@@ -302,7 +299,7 @@ function LayerShow() {
                     "margin-left": (-_this.info_box_width_px / 2) + "px",
                     "background": _this.Paras.info_box_bg,
                     "overflow-x": "hidden",
-                    "overflow-y": "auto",
+                    "overflow-y": "hidden",
                     "z-index": _this.Paras.z_index + 1
                 });
 
@@ -570,7 +567,9 @@ function LayerShow() {
                 _this.dom_info_box.fadeIn(200, function() {
                     // 设置JRoll滚动
                     if (_this.Paras.info_box_use_JRoll && _this.Paras.JRoll_obj) {
-                        _this.jroll_obj = new _this.Paras.JRoll_obj("#info_wrapper");
+                        _this.jroll_obj = new _this.Paras.JRoll_obj(_this.dom_info_box[0]);
+
+                        // console.log(_this.jroll_obj);
                     }
 
                     // console.log(_this.Paras.info_box_use_JRoll, _this.jroll_obj);
