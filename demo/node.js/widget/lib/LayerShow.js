@@ -59,8 +59,16 @@ function LayerShow() {
                 })
                 .appendTo(dom_body);
 
+            // 底部fixed层
+            _this.dom_info_bottom_fixed_box = $(document.createElement("div")).appendTo(_this.dom_info_box);
+
+            // 内容jroll层
+            _this.dom_info_jroll_box = $(document.createElement("div"))
+                .attr("class", "jroll")
+                .appendTo(_this.dom_info_box);
+
             // 内容和段落中间层——JRoll用
-            _this.dom_info_p_box = $(document.createElement("div")).appendTo(_this.dom_info_box);
+            _this.dom_info_p_box = $(document.createElement("div")).appendTo(_this.dom_info_jroll_box);
 
             // 段落层
             _this.dom_info_p = $(document.createElement("p")).css("margin", "0").appendTo(_this.dom_info_p_box);
@@ -146,6 +154,7 @@ function LayerShow() {
         resize: function() {
             var _this = this;
 
+            // 获得窗口尺寸
             _this.window_width_px = $(window).width();
             _this.window_height_px = $(window).height();
 
@@ -301,9 +310,18 @@ function LayerShow() {
                     "margin-top": (-_this.info_box_height_px / 2) + "px",
                     "margin-left": (-_this.info_box_width_px / 2) + "px",
                     "background": _this.Paras.info_box_bg,
-                    "overflow-x": "hidden",
-                    "overflow-y": "auto",
+                    "overflow": "hidden",
                     "z-index": _this.Paras.z_index + 1
+                });
+
+                // 设置jroll层样式
+                var jroll_height = _this.info_box_height_px;
+                if (_this.Paras.info_bottom_fixed_content && _this.Paras.info_bottom_fixed_content !== "")
+                    jroll_height -= _this.Paras.info_bottom_fixed_height;
+                console.log(_this.Paras.info_bottom_fixed_content, jroll_height);
+                _this.dom_info_jroll_box.css({
+                    "height": jroll_height + "px",
+                    "overflow": "hidden"
                 });
 
                 // 设置段落样式
@@ -361,6 +379,8 @@ function LayerShow() {
                 info_box_fontColor: showKind=2时有效，内容盒字体颜色。默认"#333"
                 info_box_lineHeight: showKind=2时有效，内容盒行间距。默认"30px"
                 info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）如使用，则需要依赖或引用jroll.js。默认true
+                info_bottom_fixed_content: showKind=2时有效，底部固定层内容。无默认。
+                info_bottom_fixed_height: showKind=2 && info_bottom_fixed_content!="" 时有效，高度。默认"40px"
                 JRoll_obj: JRoll对象。不使用JRoll做内容盒滚动，可不传。
                 Pics_close_show: true/false。显示关闭按钮。默认true
                 Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
@@ -392,6 +412,7 @@ function LayerShow() {
                 info_box_fontColor: "#333",
                 info_box_lineHeight: "30px",
                 info_box_use_JRoll: true,
+                info_bottom_fixed_height: "40px",
                 Pics_close_show: true,
                 Pics_close_path: "/inc/LayerShow_close.png"
             };
@@ -555,12 +576,16 @@ function LayerShow() {
             } else if (_this.Paras.showKind == 2) {
 
                 // 获得窗口尺寸
-                _this.window_width_px = $(window).width();
-                _this.window_height_px = $(window).height();
+                // _this.window_width_px = $(window).width();
+                // _this.window_height_px = $(window).height();
 
                 // 设置盒内容
                 if (_this.Paras.info_content)
                     _this.dom_info_p.html(_this.Paras.info_content);
+
+                // 设置底部fixed盒内容
+                if (_this.Paras.info_bottom_fixed_content)
+                    _this.dom_info_bottom_fixed_box.html(_this.Paras.info_bottom_fixed_content);
 
                 // 设置弹层宽高和位置
                 _this.resize.apply(_this);
@@ -570,7 +595,7 @@ function LayerShow() {
                 _this.dom_info_box.fadeIn(200, function() {
                     // 设置JRoll滚动
                     if (_this.Paras.info_box_use_JRoll && _this.Paras.JRoll_obj) {
-                        _this.jroll_obj = new _this.Paras.JRoll_obj("#info_wrapper");
+                        _this.jroll_obj = new _this.Paras.JRoll_obj("#info_wrapper .jroll");
                     }
 
                     // console.log(_this.Paras.info_box_use_JRoll, _this.jroll_obj);
