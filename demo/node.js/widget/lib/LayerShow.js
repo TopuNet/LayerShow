@@ -1,5 +1,5 @@
 /*
-    2.2.2
+    2.3.1
     高京
     2016-10-25
 
@@ -65,13 +65,10 @@ function LayerShow() {
             // 内容jroll层
             _this.dom_info_jroll_box = $(document.createElement("div"))
                 .attr("class", "jroll")
-                .appendTo(_this.dom_info_box);
-
-            // 内容和段落中间层——JRoll用
-            _this.dom_info_p_box = $(document.createElement("div")).appendTo(_this.dom_info_jroll_box);
+                .prependTo(_this.dom_info_box);
 
             // 段落层
-            _this.dom_info_p = $(document.createElement("p")).css("margin", "0").appendTo(_this.dom_info_p_box);
+            _this.dom_info_p = $(document.createElement("p")).css("margin", "0").appendTo(_this.dom_info_jroll_box);
 
             // 图片层
             _this.dom_image_box = $(document.createElement("div"))
@@ -314,11 +311,17 @@ function LayerShow() {
                     "z-index": _this.Paras.z_index + 1
                 });
 
+
                 // 设置jroll层样式
                 var jroll_height = _this.info_box_height_px;
-                if (_this.Paras.info_bottom_fixed_content && _this.Paras.info_bottom_fixed_content !== "")
+                if (_this.Paras.info_bottom_fixed_content && _this.Paras.info_bottom_fixed_content !== "") {
                     jroll_height -= _this.Paras.info_bottom_fixed_height;
-                console.log(_this.Paras.info_bottom_fixed_content, jroll_height);
+
+                    // 设置bottom_fixed样式
+                    _this.dom_info_bottom_fixed_box.css({
+                        "height": _this.Paras.info_bottom_fixed_height + "px"
+                    });
+                }
                 _this.dom_info_jroll_box.css({
                     "height": jroll_height + "px",
                     "overflow": "hidden"
@@ -379,9 +382,9 @@ function LayerShow() {
                 info_box_fontColor: showKind=2时有效，内容盒字体颜色。默认"#333"
                 info_box_lineHeight: showKind=2时有效，内容盒行间距。默认"30px"
                 info_box_use_JRoll: showKind=2时有效，内容盒使用JRoll滚动（建议移动端使用，web端不用。IE7、8不兼容）如使用，则需要依赖或引用jroll.js。默认true
-                info_bottom_fixed_content: showKind=2时有效，底部固定层内容。无默认。
-                info_bottom_fixed_height: showKind=2 && info_bottom_fixed_content!="" 时有效，高度。默认"40px"
                 JRoll_obj: JRoll对象。不使用JRoll做内容盒滚动，可不传。
+                info_bottom_fixed_content: showKind=2时有效，底部固定层内容。无默认。
+                info_bottom_fixed_height: showKind=2 && info_bottom_fixed_content!="" 时有效，高度，单位px。默认40
                 Pics_close_show: true/false。显示关闭按钮。默认true
                 Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
                 callback_before: 弹层前回调。如显示loading层。无默认
@@ -412,7 +415,7 @@ function LayerShow() {
                 info_box_fontColor: "#333",
                 info_box_lineHeight: "30px",
                 info_box_use_JRoll: true,
-                info_bottom_fixed_height: "40px",
+                info_bottom_fixed_height: 40,
                 Pics_close_show: true,
                 Pics_close_path: "/inc/LayerShow_close.png"
             };
@@ -595,7 +598,7 @@ function LayerShow() {
                 _this.dom_info_box.fadeIn(200, function() {
                     // 设置JRoll滚动
                     if (_this.Paras.info_box_use_JRoll && _this.Paras.JRoll_obj) {
-                        _this.jroll_obj = new _this.Paras.JRoll_obj("#info_wrapper .jroll");
+                        _this.jroll_obj = new _this.Paras.JRoll_obj(_this.dom_info_jroll_box[0]);
                     }
 
                     // console.log(_this.Paras.info_box_use_JRoll, _this.jroll_obj);
@@ -636,8 +639,8 @@ function LayerShow() {
                     // 销毁jroll对象
                     _this.jroll_obj.destroy();
 
-                    // 清空段落中间层的style
-                    _this.dom_info_p_box.removeAttr("style");
+                    // 清空段落的style
+                    _this.dom_info_p.removeAttr("style");
                 }
 
                 // 内容盒回到顶端

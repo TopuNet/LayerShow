@@ -1,18 +1,20 @@
-# LayerShow 插件 v2.2.2
+# LayerShow 插件 v2.3.1
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
 文件结构：
 -------------
+		
 		1. /widget/lib/LayerShow.js 放入项目文件夹jq（原生规范）或widget/lib（AMD规范）中
 		2. 如需要jroll，则将/widget/lib/jroll.js 放入项目文件夹inc（原生规范）或widget/lib（AMD规范）中
+
 
 页面引用：
 -------------
 
 原生引用
 
-        1. 页面底部引用最新版 /inc/Jquery.min.js#1.x.x 或 zepto.min.js
+		1. 页面底部引用最新版 /inc/Jquery.min.js#1.x.x 或 zepto.min.js
 		2. 后引用 /inc/jroll.js
 		3. 后引用 /jq/LayerShow.js
 
@@ -28,7 +30,7 @@ requireJS引用
 			var layershow = new LayerShow();
 
 			// 显示
-            var opt = {
+			var opt = {
 				z_index: 弹层的z-index。图片/图文内容层为z_index+1。默认400
 				bg_color: 背景层16进制颜色。默认#000000
 				bg_opacity: 背景层透明度，0～1。默认0.8
@@ -63,6 +65,24 @@ requireJS引用
 
 更新历史：
 -------------
+v2.3.1
+
+		showKind=2时，增加底部固定盒的功能。可以插入固定在底部的按钮或之类。
+
+v2.2.5
+
+		忘记兼容非jroll下的滚动了。已恢复
+
+v2.2.4
+
+		解决了一个小bug
+
+v2.2.3
+
+		找到了2.2.2提到的问题的原因：【demo的index.html中，在ls1弹层成功后，执行ls2弹层，在ls2弹层成功后执行_obj.scrollTo，不好使，原因没太搞明白。如果是直接执行ls2，是可行的。】
+		是因为初始化jroll时，用的是$("#wrapper_info")，但页面中其实初始化了两个LayerShow，so有两个#wrapper_info。
+		已解决。
+
 v2.2.2
 
 		1. 修改callback_success: 弹层成功(showKind=1时只加载了第一张图片)。回调function(_obj)。 showKind=1时_obj为加载的第一且是唯一一张图片的li盒；showKind=2时_obj为实例化的jroll对象；如info_box_use_JRoll为false，则_obj=undefined。无默认

@@ -228,6 +228,7 @@
         _init: function(el, options) {
             var me = this;
             me.wrapper = typeof el === "string" ? document.querySelector(el) : el;
+            // console.log(me.wrapper);
             me.scroller = options && options.scroller ? (typeof options.scroller === "string" ? document.querySelector(options.scroller) : options.scroller) : me.wrapper.children[0];
 
             //防止重复多次new JRoll
