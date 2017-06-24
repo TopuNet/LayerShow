@@ -1,5 +1,5 @@
 /*
-    2.2.3
+    2.2.4
     高京
     2016-10-25
 
@@ -610,8 +610,8 @@ function LayerShow() {
                     // 销毁jroll对象
                     _this.jroll_obj.destroy();
 
-                    // 清空段落中间层的style
-                    _this.dom_info_p_box.removeAttr("style");
+                    // 清空段落的style
+                    _this.dom_info_p.removeAttr("style");
                 }
 
                 // 内容盒回到顶端
