@@ -58,7 +58,7 @@ requireJS引用
 				Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
 				callback_before: 弹层前回调。如显示loading层。无默认
 				callback_success: 弹层成功(showKind=1时只加载了第一张图片)。回调function(_obj)。 showKind=1时_obj为加载的第一且是唯一一张图片的li盒；showKind=2时_obj为实例化的jroll对象；如info_box_use_JRoll为false，则_obj=undefined。无默认
-				callback_close: 关闭弹层后的回调。没想好如什么。无默认
+				callback_close(info_wrapper_html): 关闭弹层后的回调。info_wrapper_html为$("#info_wrapper").html()。无默认
 			};
             layershow.show(opt);
 
