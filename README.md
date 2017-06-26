@@ -1,4 +1,4 @@
-# LayerShow 插件 v2.3.1
+# LayerShow 插件 v2.3.2
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -67,6 +67,10 @@ requireJS引用
 
 更新历史：
 -------------
+v2.3.2
+
+		showKind=2时，增加callback_close的参数info_wrapper_html，存放$("info_wrapper").html()。
+
 v2.3.1
 
 		showKind=2时，增加底部固定盒的功能。可以插入固定在底部的按钮或之类。

@@ -1,5 +1,5 @@
 /*
-    2.3.1
+    2.3.2
     高京
     2016-10-25
 
@@ -635,6 +635,8 @@ function LayerShow() {
                 });
             } else if (_this.Paras.showKind == 2) {
 
+                var info_wrapper_html = _this.dom_info_box.html();
+
                 if (_this.Paras.info_box_use_JRoll) {
                     // 销毁jroll对象
                     _this.jroll_obj.destroy();
@@ -655,7 +657,7 @@ function LayerShow() {
                     if (reShow) {
                         _this.show.apply(_this, [_this.Paras]);
                     } else if (_this.Paras.callback_close)
-                        _this.Paras.callback_close();
+                        _this.Paras.callback_close(info_wrapper_html);
                 });
             }
         },
