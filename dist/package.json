@@ -1,6 +1,6 @@
 {
   "name": "TopuNet-LayerShow",
-  "version": "2.3.2",
+  "version": "2.4.1",
   "description": "弹层显示图片（支持多张）或图文内容",
   "main": "widget/lib/LayerShow.js",
   "scripts": {

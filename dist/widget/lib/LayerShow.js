@@ -1,5 +1,5 @@
 /*
-    2.3.2
+    2.4.1
     高京
     2016-10-25
 
@@ -13,6 +13,7 @@
         dom_close_image: 关闭图片,
         dom_image_ul: 图片ul盒,
         dom_image_li: 图片li盒,
+        dom_image_li_image: 图片容器盒（放置图片的盒）
         dom_arrow_left_box: 图片左箭头盒,
         dom_arrow_left_image: 图片左箭头,
         dom_arrow_right_box: 图片右箭头盒,
@@ -73,8 +74,7 @@ function LayerShow() {
             // 图片层
             _this.dom_image_box = $(document.createElement("div"))
                 .css({
-                    "position": "fixed",
-                    "display": "none",
+                    "position": "absolute",
                     "overflow": "hidden",
                     "top": "0",
                     "left": "0"
@@ -108,19 +108,30 @@ function LayerShow() {
                     "position": "absolute",
                     "list-style": "none",
                     "padding": 0,
-                    "margin": 0
+                    "margin": 0,
+                    "z-index": _this.Paras.z_index + 1
                 })
                 .appendTo(_this.dom_image_box);
 
             // 图片li盒
-            _this.dom_image_li = $(document.createElement("li"));
+            _this.dom_image_li = $(document.createElement("li"))
+                .css({
+                    "float": "left",
+                    "cursor": "pointer",
+                    "overflow": "hidden",
+                    "position": "relative"
+                });
+
+            // 图片容器盒（放置图片的盒）
+            _this.dom_image_li_image = $(document.createElement("div"));
 
             // 图片左箭头盒
             _this.dom_arrow_left_box = $(document.createElement("div"))
                 .css({
                     "position": "absolute",
                     "display": "none",
-                    "text-align": "center"
+                    "text-align": "center",
+                    "z-index": _this.Paras.z_index + 2
                 })
                 .appendTo(_this.dom_image_box);
 
@@ -135,7 +146,8 @@ function LayerShow() {
             _this.dom_arrow_right_box = $(document.createElement("div"))
                 .css({
                     "position": "absolute",
-                    "display": "none"
+                    "display": "none",
+                    "z-index": _this.Paras.z_index + 2
                 })
                 .appendTo(_this.dom_image_box);
 
@@ -155,10 +167,16 @@ function LayerShow() {
             _this.window_width_px = $(window).width();
             _this.window_height_px = $(window).height();
 
+            // 计算图片li盒的margin
+            _this.li_marginTop_px = _this.window_height_px * (1 - _this.image_size_percent_from_window_height) / 2;
+            _this.li_marginLeft_px = _this.window_width_px * (1 - _this.image_size_percent_from_window_width) / 2;
+
             // 计算图片li盒的宽度（含margin-left）
             _this.li_width_px = _this.window_width_px * _this.image_size_percent_from_window_width;
-            _this.li_marginLeft_px = _this.window_width_px * (1 - _this.image_size_percent_from_window_width) / 2;
             _this.li_item_width_px = _this.li_width_px + _this.li_marginLeft_px;
+
+            // 计算图片li盒的高度
+            _this.li_height_px = _this.window_height_px * _this.image_size_percent_from_window_height;
 
             // 背景层
             _this.dom_bg_layer.css({
@@ -214,8 +232,8 @@ function LayerShow() {
                 var li_obj = _this.dom_image_ul.find("li");
                 li_obj.css({
                     "width": _this.li_width_px + "px",
-                    "height": _this.window_height_px * _this.image_size_percent_from_window_height + "px",
-                    "margin-top": _this.window_height_px * (1 - _this.image_size_percent_from_window_height) / 2 + "px",
+                    "height": _this.li_height_px + "px",
+                    "margin-top": _this.li_marginTop_px + "px",
                     "margin-left": _this.li_marginLeft_px + "px"
                 });
 
@@ -371,6 +389,7 @@ function LayerShow() {
                 Pics_scroll_speed: showKind=1时有效。图片切换时的速度。毫秒。默认500。移动端建议设置为100-200，过慢会有卡顿的现象
                 Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
                 Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
+                Pics_scale_fit: showKind=1且非ie678时有效。图片自动缩小到适配尺寸。true(默认)-无论图片多大，都可以全屏显示完整，不监听拖拽事件；false-图片原尺寸显示，拖拽时可改变显示位置(类似图片放大镜的效果)
                 callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
                 info_content: showKind=2时有效，装载内容。无默认
                 info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
@@ -389,7 +408,7 @@ function LayerShow() {
                 Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
                 callback_before: 弹层前回调。如显示loading层。无默认
                 callback_success: 弹层成功回调。如关闭loading层。无默认
-                callback_close: 关闭弹层后的回调。没想好如什么。无默认
+                callback_close(info_wrapper_html): 关闭弹层后的回调。info_wrapper_html为showKind=2时，$("#info_wrapper").html()。无默认
             }
         */
         show: function(opt) {
@@ -405,6 +424,7 @@ function LayerShow() {
                 Pics_scroll_speed: 500,
                 Pics_arrow_left: "/inc/LayerShow_arrow_left.png",
                 Pics_arrow_right: "/inc/LayerShow_arrow_right.png",
+                Pics_scale_fit: true,
                 callback_image_click: 1,
                 info_box_width_per: 80,
                 info_box_height_per: 90,
@@ -422,9 +442,13 @@ function LayerShow() {
 
             _this.Paras = $.extend(opt_default, opt);
 
-            // IE78强制不使用JRoll
-            if (_this.isIE678())
+            // IE78强制不使用JRoll，并强制缩小图片到可视大小
+            if (_this.isIE678()) {
                 _this.Paras.info_box_use_JRoll = false;
+                _this.Paras.Pics_scale_fit = true;
+            }
+
+
 
             // 看有没有创建dom
             if (!_this.dom_bg_layer)
@@ -454,12 +478,111 @@ function LayerShow() {
                         })();
                     }
 
-                    // 插入li到ul。监听li点击
-                    var insert_li = function() {
-                        _this.dom_image_li.clone()
-                            .appendTo(_this.dom_image_ul)
-                            .on("touchstart mousedown", function(e) {
-                                e.preventDefault();
+                    // 对插入的li的监听
+                    var li_Listener = function(li) {
+
+                        // 鼠标开始位置
+                        var position_start = null;
+
+                        // div原始位置
+                        var position_ori = null;
+
+                        // 鼠标新位置
+                        var position_new = null;
+
+                        // li_obj
+                        var li_obj = $(li);
+
+                        // div
+                        var div = li_obj.find("div");
+
+                        // 判断x、y轴的可移动性（图片如果小于盒尺寸，则不允许移动）
+                        var canMove = {
+                            x: true,
+                            y: true
+                        };
+
+                        // 起始处理
+                        var start_handler = function(p) {
+
+                            // 设置鼠标开始位置
+                            position_start = {
+                                x: p.x,
+                                y: p.y
+                            };
+
+                            // 设置div原始位置
+                            position_ori = {
+                                "top": div.position().top,
+                                "left": div.position().left,
+                                "margin_top": parseFloat(div.css("margin-top").replace("px", "")),
+                                "margin_left": parseFloat(div.css("margin-left").replace("px", ""))
+                            };
+
+                            // 判断可移动性
+                            canMove = {
+                                x: div.width() > li_obj.width(),
+                                y: div.height() > li_obj.height()
+                            };
+
+                        };
+
+                        // 移动中处理
+                        var move_handler = function(p) {
+
+                            if (position_start === null)
+                                return;
+
+                            if (!canMove.x && !canMove.y)
+                                return;
+
+                            // 获得新位置
+                            position_new = {
+                                x: p.x,
+                                y: p.y
+                            };
+
+                            // 比较移动距离
+                            var x_diff = position_new.x - position_start.x,
+                                y_diff = position_new.y - position_start.y;
+
+                            // 获得div新位置
+                            var position_div = {
+                                top: position_ori.top + y_diff,
+                                left: position_ori.left + x_diff
+                            };
+
+                            // 边界判定
+                            if (position_div.left > position_ori.margin_left * -1)
+                                position_div.left = position_ori.margin_left * -1;
+                            else if (position_div.left < 0)
+                                position_div.left = 0;
+                            if (position_div.top > position_ori.margin_top * -1)
+                                position_div.top = position_ori.margin_top * -1;
+                            else if (position_div.top < 0)
+                                position_div.top = 0;
+
+                            // 移动
+                            if (canMove.y) {
+                                div.css({
+                                    "top": position_div.top + "px"
+                                });
+                            }
+                            if (canMove.x) {
+                                div.css({
+                                    "left": position_div.left + "px"
+                                });
+                            }
+
+                        };
+
+                        // 结束移动处理
+                        var end_handler = function() {
+
+                            if (position_start === null)
+                                return;
+
+                            if (position_new === null) {
 
                                 if (typeof _this.Paras.callback_image_click === "function") // 自定义方法
                                     _this.Paras.callback_image_click($(this));
@@ -467,7 +590,82 @@ function LayerShow() {
                                     _this.close.apply(_this);
                                 else if (_this.Paras.callback_image_click == 2) // 下一张图片 
                                     _this.imageUlSlideLeft.apply(_this, [1]);
+                            }
+
+                            position_start = null;
+                            position_new = null;
+                        };
+
+                        if (_this.isIE678()) {
+                            li_obj.on("click", function() {
+                                position_start = ""; // 欺骗end_handler。掩盖ie678无法进入start_handler的问题
+                                end_handler();
                             });
+                        } else {
+        
+                            li.addEventListener("touchstart", function(e) {
+                                e.preventDefault();
+
+                                start_handler({
+                                    x: e.touches[0].clientX,
+                                    y: e.touches[0].clientY
+                                });
+                            });
+
+                            li.addEventListener("mousedown", function(e) {
+                                e.preventDefault();
+
+                                start_handler({
+                                    x: e.clientX,
+                                    y: e.clientY
+                                });
+                            });
+
+                            li.addEventListener("touchmove", function(e) {
+                                e.preventDefault();
+
+                                move_handler({
+                                    x: e.touches[0].clientX,
+                                    y: e.touches[0].clientY
+                                });
+                            });
+
+                            li.addEventListener("mousemove", function(e) {
+                                e.preventDefault();
+
+                                move_handler({
+                                    x: e.clientX,
+                                    y: e.clientY
+                                });
+                            });
+
+                            li.addEventListener("touchend", function(e) {
+                                e.preventDefault();
+
+                                end_handler();
+                            });
+
+                            li.addEventListener("mouseup", function(e) {
+                                e.preventDefault();
+
+                                end_handler();
+                            });
+                        }
+
+                    };
+
+                    // 插入li到ul，插入图片容器div到li。监听li
+                    var insert_li = function() {
+                        var li = _this.dom_image_li.clone();
+
+                        _this.dom_image_li_image.clone()
+                            .appendTo(li);
+
+                        li.appendTo(_this.dom_image_ul);
+
+                        li_Listener(li[0]);
+
+                        setTimeout(function() {}, 1000);
                     };
 
                     // 图片加载成功后的回调（获得图片组中显示大小）
@@ -478,18 +676,19 @@ function LayerShow() {
                             // 计算图片应显示尺寸
                             var img_size = _this.imageGetSize.apply(_this, [$img]);
 
-                            // 获得背景图片尺寸的样式。如进行了缩小，则设为"contain"
-                            var background_size = img_size.img_width + "px," + img_size.img_height + "px";
-                            if ((img_size.img_width >= img_size.box_width || img_size.img_height >= img_size.box_height) && !_this.isIE678())
+                            // 获得背景图片尺寸的样式。
+                            var background_size = img_size.img_width + "px " + img_size.img_height + "px";
+
+                            // 如需要自动缩小，并且原图确实比容器大，并且不是ie678，则设为"contain"
+                            if (_this.Paras.Pics_scale_fit && (img_size.img_width >= img_size.box_width || img_size.img_height >= img_size.box_height) && !_this.isIE678())
                                 background_size = "contain";
 
-                            // 装载图片到li
+                            // 装载图片到图片容器div
                             var li = _this.dom_image_ul.find("li");
-                            var style = "";
-                            style += "float:left;";
-                            style += "cursor:pointer;";
+                            var li_now = $(li[now_index]);
+                            var div = li_now.find("div");
+
                             if (_this.isIE678()) {
-                                style += "position:relative;";
 
                                 $(document.createElement("img"))
                                     .attr("src", $img.src)
@@ -501,23 +700,45 @@ function LayerShow() {
                                         "left": "50%",
                                         "margin-top": "-" + (img_size.img_height / 2) + "px",
                                         "margin-left": "-" + (img_size.img_width / 2) + "px"
-                                    }).appendTo($(li[now_index]));
+                                    }).appendTo(div);
 
                             } else {
-                                style += "background: url(" + $img.src + ") no-repeat;"; //
-                                // style += "background-attachment: fixed;";
-                                style += "background-position: center;";
-                                style += "background-size: " + background_size + ";";
+
+                                div.css({
+                                    "position": "absolute",
+                                    "z-index": _this.Paras.z_index + 1,
+                                    "width": img_size.img_width + "px",
+                                    "height": img_size.img_height + "px",
+                                    "top": "50%",
+                                    "left": "50%",
+                                    "margin-top": -img_size.img_height / 2 + "px",
+                                    "margin-left": -img_size.img_width / 2 + "px",
+                                    "background": "url('" + $img.src + "') no-repeat center center",
+                                    "background-size": background_size
+                                });
                             }
                             if (now_index > 0) {
-                                style += "width: " + $(li[0]).css("width") + ";";
-                                style += "height: " + $(li[0]).css("height") + ";";
-                                style += "margin-top: " + $(li[0]).css("margin-top") + ";";
-                                style += "margin-left: " + $(li[0]).css("margin-left") + ";";
-                            }
-                            $(li[now_index]).attr("style", style);
 
-                            if (now_index === 0) {
+                                li_now.css({
+                                    "width": _this.li_width_px + "px",
+                                    "height": _this.li_height_px + "px",
+                                    "margin-top": _this.li_marginTop_px + "px",
+                                    "margin-left": _this.li_marginLeft_px + "px"
+                                });
+
+
+                                if (++imageLoaded_success_count + 1 == _this.Paras.Pics.length) {
+
+                                    // 重置ul宽度
+                                    _this.dom_image_ul.css("width", _this.li_item_width_px * li.length + "px");
+
+                                    // 显示左右箭头
+                                    if (_this.dom_arrow_left_box.css("display") == "none") {
+                                        _this.dom_arrow_left_box.fadeIn(200);
+                                        _this.dom_arrow_right_box.fadeIn(200);
+                                    }
+                                }
+                            } else {
 
                                 // 设置弹层宽高和位置
                                 _this.resize.apply(_this);
@@ -545,26 +766,9 @@ function LayerShow() {
                                 _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
                                 _this.dom_image_box.fadeIn(200, function() {
                                     if (_this.Paras.callback_success)
-                                        _this.Paras.callback_success(li);
+                                        _this.Paras.callback_success(div.parents("li"));
                                 });
 
-                            } else {
-
-                                if (++imageLoaded_success_count + 1 == _this.Paras.Pics.length) {
-
-                                    // console.log("514");
-                                    // console.log(++imageLoaded_success_count);
-                                    // console.log($(li[now_index]).width());
-
-                                    // 重置ul宽度
-                                    _this.dom_image_ul.css("width", _this.li_item_width_px * li.length + "px");
-
-                                    // 显示左右箭头
-                                    if (_this.dom_arrow_left_box.css("display") == "none") {
-                                        _this.dom_arrow_left_box.fadeIn(200);
-                                        _this.dom_arrow_right_box.fadeIn(200);
-                                    }
-                                }
                             }
                         };
                     }();
@@ -699,6 +903,16 @@ function LayerShow() {
             var img_width_px = img.width;
             var img_height_px = img.height;
             var img_ratio = img_width_px / img_height_px;
+
+            // 如果不需要缩小图片显示，则返回图片原尺寸(Paras.Pics_scale_fit)
+            if (!_this.Paras.Pics_scale_fit) {
+                return {
+                    img_width: img_width_px,
+                    img_height: img_height_px,
+                    box_width: box_size.width,
+                    box_height: box_size.height
+                };
+            }
 
             // 获得容器的宽高比
             var box_ratio = box_size.width / box_size.height;

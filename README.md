@@ -1,4 +1,4 @@
-# LayerShow 插件 v2.3.2
+# LayerShow 插件 v2.4.1
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -40,6 +40,7 @@ requireJS引用
 				Pics_scroll_speed: showKind=1时有效。图片切换时的速度。毫秒。默认500。移动端建议设置为100-200，过慢会有卡顿的现象
 				Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
 				Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
+                Pics_scale_fit: showKind=1且非ie678时有效。图片自动缩小到适配尺寸。true(默认)-无论图片多大，都可以全屏显示完整，不监听拖拽事件；false-图片原尺寸显示，拖拽时可改变显示位置(类似图片放大镜的效果)
 				callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
 				info_content: showKind=2时有效，装载内容。无默认
 				info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
@@ -58,7 +59,7 @@ requireJS引用
 				Pics_close_path: 关闭按钮图片路径。默认/inc/LayerShow_close.png。
 				callback_before: 弹层前回调。如显示loading层。无默认
 				callback_success: 弹层成功(showKind=1时只加载了第一张图片)。回调function(_obj)。 showKind=1时_obj为加载的第一且是唯一一张图片的li盒；showKind=2时_obj为实例化的jroll对象；如info_box_use_JRoll为false，则_obj=undefined。无默认
-				callback_close(info_wrapper_html): 关闭弹层后的回调。info_wrapper_html为$("#info_wrapper").html()。无默认
+                callback_close(info_wrapper_html): 关闭弹层后的回调。info_wrapper_html为showKind=2时，$("#info_wrapper").html()。无默认
 			};
             layershow.show(opt);
 
@@ -67,6 +68,10 @@ requireJS引用
 
 更新历史：
 -------------
+v2.4.1
+
+		增加参数Pics_scale_fit：showKind=1且不为ie678时，可以不自动缩小图片到可视范围内，而是原图尺寸显示，划屏或拖拽时可以移动图片，类似放大镜效果
+
 v2.3.2
 
 		showKind=2时，增加callback_close的参数info_wrapper_html，存放$("info_wrapper").html()。
