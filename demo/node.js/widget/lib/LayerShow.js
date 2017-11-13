@@ -1,5 +1,5 @@
 /*
-    2.4.1
+    2.5.1
     高京
     2016-10-25
 
@@ -131,34 +131,41 @@ function LayerShow() {
                     "position": "relative"
                 });
 
-            // 图片loading盒
-            _this.dom_image_loading = $(document.createElement("div"))
-                .css({
-                    "width": "38px",
-                    "height": "38px",
-                    "position": "absolute",
-                    "top": "50%",
-                    "left": "50%",
-                    "margin-top": "-19px",
-                    "margin-left": "-19px",
-                    "background": "transparent url(\"data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/%3E%3C/svg%3E\") no-repeat",
-                    "background-size": "contain",
-                    "display": "inline-block",
-                    "vertical-align": "baseline",
-                    "animation": "LayerShow_img_loading 1s infinite"
-                });
+            if (!_this.Paras.Pics_preload_all) {
 
-            insert_keyframe(
-                "@-webkit-keyframes LayerShow_img_loading {" +
-                "0% { transform: rotate3d(0, 0, 1, 0deg); }" +
-                "100% { transform: rotate3d(0, 0, 1, 360deg); }"
-            );
+                // 图片loading盒
+                _this.dom_image_loading = $(document.createElement("div"))
+                    .css({
+                        "width": "38px",
+                        "height": "38px",
+                        "position": "absolute",
+                        "top": "50%",
+                        "left": "50%",
+                        "margin-top": "-19px",
+                        "margin-left": "-19px",
+                        "background-color": "transparent",
+                        "background-image": "url(\"data:image/svg+xml;charset=utf8, <svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'><path fill='none' d='M0 0h100v100H0z'/><rect width='7' height='20' x='46.5' y='40' fill='#E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/></svg>\")" +
+                            ",url(\"data:image/svg+xml;charset=utf8, <svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'><path fill='none' d='M0 0h100v100H0z'/><rect xmlns='http://www.w3.org/2000/svg' width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.56)' rx='5' ry='5' transform='translate(0 -30)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.5)' rx='5' ry='5' transform='rotate(30 105.98 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.43)' rx='5' ry='5' transform='rotate(60 75.98 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.38)' rx='5' ry='5' transform='rotate(90 65 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.32)' rx='5' ry='5' transform='rotate(120 58.66 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.28)' rx='5' ry='5' transform='rotate(150 54.02 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.25)' rx='5' ry='5' transform='rotate(180 50 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.2)' rx='5' ry='5' transform='rotate(-150 45.98 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.17)' rx='5' ry='5' transform='rotate(-120 41.34 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.14)' rx='5' ry='5' transform='rotate(-90 35 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.1)' rx='5' ry='5' transform='rotate(-60 24.02 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.03)' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/></svg>\")",
+                        "background-size": "contain",
+                        "background-repeat": "no-repeat",
+                        // "display": "inline-block",
+                        // "vertical-align": "baseline",
+                        "animation": "LayerShow_img_loading 1s steps(12,end) infinite",
+                        "-webkit-animation": "LayerShow_img_loading 1s steps(12,end) infinite"
+                    });
 
-            insert_keyframe(
-                "keyframes LayerShow_img_loading {" +
-                "0% { transform: rotate3d(0, 0, 1, 0deg); }" +
-                "100% { transform: rotate3d(0, 0, 1, 360deg); }"
-            );
+                insert_keyframe(
+                    "@-webkit-keyframes LayerShow_img_loading {" +
+                    "0% { transform: rotate3d(0, 0, 1, 0deg); }" +
+                    "100% { transform: rotate3d(0, 0, 1, 360deg); } }"
+                );
+
+                // insert_keyframe(
+                //     "keyframes LayerShow_img_loading {" +
+                //     "0% { transform: rotate3d(0, 0, 1, 0deg); }" +
+                //     "100% { transform: rotate3d(0, 0, 1, 360deg); } }"
+                // );
+            }
 
             // 图片容器盒（放置图片的盒）
             _this.dom_image_li_image = $(document.createElement("div"));
@@ -428,7 +435,7 @@ function LayerShow() {
                 Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
                 Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
                 Pics_scale_fit: showKind=1且非ie678时有效。图片自动缩小到适配尺寸。true(默认)-无论图片多大，都可以全屏显示完整，不监听拖拽事件；false-图片原尺寸显示，拖拽时可改变显示位置(类似图片放大镜的效果)
-                Pics_preload_all: showKind=1时有效。图片预加载所有大图，移动端建议false。默认true。
+                Pics_preload_all: showKind=1时有效。图片预加载所有大图，移动端建议false(以免图片加载太多影响打开)，pc端建议true(ie不支持svg)。默认true。
                 callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
                 info_content: showKind=2时有效，装载内容。无默认
                 info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
@@ -464,7 +471,7 @@ function LayerShow() {
                 Pics_arrow_left: "/inc/LayerShow_arrow_left.png",
                 Pics_arrow_right: "/inc/LayerShow_arrow_right.png",
                 Pics_scale_fit: true,
-                Pics_preload_all: false,
+                Pics_preload_all: true,
                 callback_image_click: 1,
                 info_box_width_per: 80,
                 info_box_height_per: 90,
@@ -699,8 +706,10 @@ function LayerShow() {
                         var li = _this.dom_image_li.clone();
 
                         if (!_this.Paras.Pics_preload_all) {
+                            // _this.dom_image_loading_bg.clone()
+                            //     .appendTo(li);
                             _this.dom_image_loading.clone()
-                                .attr("imgPath", imgPath)
+                                .attr("imgPath", imgPath + "1")
                                 .appendTo(li);
                         }
 
@@ -777,7 +786,7 @@ function LayerShow() {
                             // 显示图片，隐藏loading
                             div.fadeIn(200);
                             div.siblings("div").fadeOut(200, function() {
-                                this.remove();
+                                $(this).remove();
                             });
 
                             if (now_index > 0) {

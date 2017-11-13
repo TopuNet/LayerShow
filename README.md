@@ -1,4 +1,4 @@
-# LayerShow 插件 v2.4.1
+# LayerShow 插件 v2.5.1
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -41,6 +41,7 @@ requireJS引用
 				Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
 				Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
                 Pics_scale_fit: showKind=1且非ie678时有效。图片自动缩小到适配尺寸。true(默认)-无论图片多大，都可以全屏显示完整，不监听拖拽事件；false-图片原尺寸显示，拖拽时可改变显示位置(类似图片放大镜的效果)
+                Pics_preload_all: showKind=1时有效。图片预加载所有大图，移动端建议false(以免图片加载太多影响打开)，pc端建议true(ie不支持svg)。默认true。
 				callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
 				info_content: showKind=2时有效，装载内容。无默认
 				info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
@@ -68,9 +69,13 @@ requireJS引用
 
 更新历史：
 -------------
+v2.5.1
+
+		增加参数 Pics_preload_all: showKind=1时有效。图片预加载所有大图，移动端建议false(以免图片加载太多影响打开)，pc端建议true(ie不支持svg)。默认true。
+
 v2.4.1
 
-		增加参数Pics_scale_fit：showKind=1且不为ie678时，可以不自动缩小图片到可视范围内，而是原图尺寸显示，划屏或拖拽时可以移动图片，类似放大镜效果
+		增加参数 Pics_scale_fit：showKind=1且不为ie678时，可以不自动缩小图片到可视范围内，而是原图尺寸显示，划屏或拖拽时可以移动图片，类似放大镜效果
 
 v2.3.2
 

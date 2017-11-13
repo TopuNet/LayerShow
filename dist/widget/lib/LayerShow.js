@@ -1,5 +1,5 @@
 /*
-    2.4.1
+    2.5.1
     高京
     2016-10-25
 
@@ -13,6 +13,7 @@
         dom_close_image: 关闭图片,
         dom_image_ul: 图片ul盒,
         dom_image_li: 图片li盒,
+        dom_image_loading: 图片loading盒
         dom_image_li_image: 图片容器盒（放置图片的盒）
         dom_arrow_left_box: 图片左箭头盒,
         dom_arrow_left_image: 图片左箭头,
@@ -20,6 +21,14 @@
         dom_arrow_right_image: 图片右箭头
     }
 */
+var insert_keyframe = function(style) {
+    var _obj = document.styleSheets[0];
+    if (_obj.insertRule)
+        _obj.insertRule(style, 0);
+    else
+        _obj.appendRule(style, 0);
+};
+
 function LayerShow() {
     return {
         // 图片尺寸占window的比例
@@ -121,6 +130,42 @@ function LayerShow() {
                     "overflow": "hidden",
                     "position": "relative"
                 });
+
+            if (!_this.Paras.Pics_preload_all) {
+
+                // 图片loading盒
+                _this.dom_image_loading = $(document.createElement("div"))
+                    .css({
+                        "width": "38px",
+                        "height": "38px",
+                        "position": "absolute",
+                        "top": "50%",
+                        "left": "50%",
+                        "margin-top": "-19px",
+                        "margin-left": "-19px",
+                        "background-color": "transparent",
+                        "background-image": "url(\"data:image/svg+xml;charset=utf8, <svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'><path fill='none' d='M0 0h100v100H0z'/><rect width='7' height='20' x='46.5' y='40' fill='#E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/></svg>\")" +
+                            ",url(\"data:image/svg+xml;charset=utf8, <svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'><path fill='none' d='M0 0h100v100H0z'/><rect xmlns='http://www.w3.org/2000/svg' width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.56)' rx='5' ry='5' transform='translate(0 -30)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.5)' rx='5' ry='5' transform='rotate(30 105.98 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.43)' rx='5' ry='5' transform='rotate(60 75.98 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.38)' rx='5' ry='5' transform='rotate(90 65 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.32)' rx='5' ry='5' transform='rotate(120 58.66 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.28)' rx='5' ry='5' transform='rotate(150 54.02 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.25)' rx='5' ry='5' transform='rotate(180 50 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.2)' rx='5' ry='5' transform='rotate(-150 45.98 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.17)' rx='5' ry='5' transform='rotate(-120 41.34 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.14)' rx='5' ry='5' transform='rotate(-90 35 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.1)' rx='5' ry='5' transform='rotate(-60 24.02 65)'/><rect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.03)' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/></svg>\")",
+                        "background-size": "contain",
+                        "background-repeat": "no-repeat",
+                        // "display": "inline-block",
+                        // "vertical-align": "baseline",
+                        "animation": "LayerShow_img_loading 1s steps(12,end) infinite",
+                        "-webkit-animation": "LayerShow_img_loading 1s steps(12,end) infinite"
+                    });
+
+                insert_keyframe(
+                    "@-webkit-keyframes LayerShow_img_loading {" +
+                    "0% { transform: rotate3d(0, 0, 1, 0deg); }" +
+                    "100% { transform: rotate3d(0, 0, 1, 360deg); } }"
+                );
+
+                // insert_keyframe(
+                //     "keyframes LayerShow_img_loading {" +
+                //     "0% { transform: rotate3d(0, 0, 1, 0deg); }" +
+                //     "100% { transform: rotate3d(0, 0, 1, 360deg); } }"
+                // );
+            }
 
             // 图片容器盒（放置图片的盒）
             _this.dom_image_li_image = $(document.createElement("div"));
@@ -390,6 +435,7 @@ function LayerShow() {
                 Pics_arrow_left: showKind=1时有效。图片切换 左箭头图片路径。默认/inc/LayerShow_arrow_left.png。
                 Pics_arrow_right: showKind=1时有效。图片切换 右箭头图片路径。默认/inc/LayerShow_arrow_left.png。
                 Pics_scale_fit: showKind=1且非ie678时有效。图片自动缩小到适配尺寸。true(默认)-无论图片多大，都可以全屏显示完整，不监听拖拽事件；false-图片原尺寸显示，拖拽时可改变显示位置(类似图片放大镜的效果)
+                Pics_preload_all: showKind=1时有效。图片预加载所有大图，移动端建议false(以免图片加载太多影响打开)，pc端建议true(ie不支持svg)。默认true。
                 callback_image_click: showKind=1时有效。图片点击回调：1-关闭弹层 | 2-下一张图片 | function(li_obj)-自定义方法。默认"1"
                 info_content: showKind=2时有效，装载内容。无默认
                 info_box_width_per: showKind=2时有效，内容盒宽度百分比。默认80
@@ -425,6 +471,7 @@ function LayerShow() {
                 Pics_arrow_left: "/inc/LayerShow_arrow_left.png",
                 Pics_arrow_right: "/inc/LayerShow_arrow_right.png",
                 Pics_scale_fit: true,
+                Pics_preload_all: true,
                 callback_image_click: 1,
                 info_box_width_per: 80,
                 info_box_height_per: 90,
@@ -602,7 +649,7 @@ function LayerShow() {
                                 end_handler();
                             });
                         } else {
-        
+
                             li.addEventListener("touchstart", function(e) {
                                 e.preventDefault();
 
@@ -655,13 +702,27 @@ function LayerShow() {
                     };
 
                     // 插入li到ul，插入图片容器div到li。监听li
-                    var insert_li = function() {
+                    var insert_li = function(imgPath) {
                         var li = _this.dom_image_li.clone();
 
-                        _this.dom_image_li_image.clone()
-                            .appendTo(li);
+                        if (!_this.Paras.Pics_preload_all) {
+                            // _this.dom_image_loading_bg.clone()
+                            //     .appendTo(li);
+                            _this.dom_image_loading.clone()
+                                .attr("imgPath", imgPath + "1")
+                                .appendTo(li);
+                        }
 
-                        li.appendTo(_this.dom_image_ul);
+                        // _this.dom_image_li_image.clone()
+                        //     .appendTo(li);
+
+                        li.css({
+                                "width": _this.li_width_px + "px",
+                                "height": _this.li_height_px + "px",
+                                "margin-top": _this.li_marginTop_px + "px",
+                                "margin-left": _this.li_marginLeft_px + "px"
+                            })
+                            .appendTo(_this.dom_image_ul);
 
                         li_Listener(li[0]);
 
@@ -669,7 +730,7 @@ function LayerShow() {
                     };
 
                     // 图片加载成功后的回调（获得图片组中显示大小）
-                    var imageLoaded_success = function() {
+                    _this.imageLoaded_success = function() {
                         var imageLoaded_success_count = 0;
                         return function($img, now_index) {
 
@@ -686,7 +747,11 @@ function LayerShow() {
                             // 装载图片到图片容器div
                             var li = _this.dom_image_ul.find("li");
                             var li_now = $(li[now_index]);
-                            var div = li_now.find("div");
+                            var div = $(_this.dom_image_li_image.clone())
+                                .css({
+                                    "display": "none"
+                                })
+                                .appendTo(li_now);
 
                             if (_this.isIE678()) {
 
@@ -717,14 +782,14 @@ function LayerShow() {
                                     "background-size": background_size
                                 });
                             }
-                            if (now_index > 0) {
 
-                                li_now.css({
-                                    "width": _this.li_width_px + "px",
-                                    "height": _this.li_height_px + "px",
-                                    "margin-top": _this.li_marginTop_px + "px",
-                                    "margin-left": _this.li_marginLeft_px + "px"
-                                });
+                            // 显示图片，隐藏loading
+                            div.fadeIn(200);
+                            div.siblings("div").fadeOut(200, function() {
+                                $(this).remove();
+                            });
+
+                            if (now_index > 0) {
 
 
                                 if (++imageLoaded_success_count + 1 == _this.Paras.Pics.length) {
@@ -746,37 +811,54 @@ function LayerShow() {
                                 // 显示关闭按钮
                                 _this.dom_close_box.fadeIn(200);
 
-                                // 加载其他图片
                                 var i = 1,
-                                    len = _this.Paras.Pics.length,
+                                    len = _this.Paras.Pics.length;
+                                if (_this.Paras.Pics_preload_all) {
+
+                                    // 加载其他图片
 
                                     // 加载成功后的回调，因为是循环调用，所以闭包伺候
-                                    _imageLoaded_success = function(now_index) {
+                                    var _imageLoaded_success = function(now_index) {
                                         return function($img) {
-                                            imageLoaded_success($img, now_index);
+                                            _this.imageLoaded_success($img, now_index);
                                         };
                                     };
 
-                                for (; i < len; i++) {
-                                    insert_li();
-                                    _this.imageLoad.apply(_this, [_this.Paras.Pics[i], _imageLoaded_success(i)]);
+                                    for (; i < len; i++) {
+                                        insert_li();
+                                        _this.imageLoad.apply(_this, [_this.Paras.Pics[i], _imageLoaded_success(i)]);
+                                    }
+                                } else {
+                                    if (_this.dom_bg_layer.css("opacity") === "0") {
+
+                                        // 为其他图片插入li
+                                        for (; i < len; i++) {
+                                            insert_li(_this.Paras.Pics[i]);
+                                        }
+
+                                        // 显示左右箭头
+                                        _this.dom_arrow_left_box.fadeIn(200);
+                                        _this.dom_arrow_right_box.fadeIn(200);
+                                    }
                                 }
 
                                 // 显示弹层
-                                _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
-                                _this.dom_image_box.fadeIn(200, function() {
-                                    if (_this.Paras.callback_success)
-                                        _this.Paras.callback_success(div.parents("li"));
-                                });
+                                if (_this.dom_bg_layer.css("opacity") === "0") {
+                                    _this.dom_bg_layer.fadeTo(200, _this.Paras.bg_opacity);
+                                    _this.dom_image_box.fadeIn(200, function() {
+                                        if (_this.Paras.callback_success)
+                                            _this.Paras.callback_success(div.parents("li"));
+                                    });
+                                }
 
                             }
                         };
                     }();
 
-                    // 加载第一张图片。回调中显示弹层，开始加载其他图片
+                    // 加载第一张图片。回调中显示弹层
                     insert_li();
                     _this.imageLoad.apply(_this, [_this.Paras.Pics[0], function($img) {
-                        imageLoaded_success($img, 0);
+                        _this.imageLoaded_success($img, 0);
                     }]);
                 }
 
@@ -960,6 +1042,14 @@ function LayerShow() {
                 // 还原ul位置
                 _this.dom_image_ul.css("left", 0);
 
+                // 加载图片
+                var imgPath = $(_this.dom_image_ul.find("li")[0]).find("div").attr("imgPath");
+                if (imgPath !== undefined) {
+                    _this.imageLoad.apply(_this, [imgPath, function($img) {
+                        _this.imageLoaded_success($img, 0);
+                    }]);
+                }
+
                 _this.image_sliding = false;
             });
 
@@ -991,6 +1081,14 @@ function LayerShow() {
                 "left": "0"
             }, _this.Paras.Pics_scroll_speed, function() {
                 _this.image_sliding = false;
+
+                // 加载图片
+                var imgPath = $(_this.dom_image_ul.find("li")[0]).find("div").attr("imgPath");
+                if (imgPath !== undefined) {
+                    _this.imageLoad.apply(_this, [imgPath, function($img) {
+                        _this.imageLoaded_success($img, 0);
+                    }]);
+                }
             });
 
         },
