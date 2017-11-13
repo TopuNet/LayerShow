@@ -1,5 +1,5 @@
 /*
-    2.5.2
+    2.5.3
     高京
     2016-10-25
 
@@ -809,7 +809,9 @@ function LayerShow() {
                                 _this.resize.apply(_this);
 
                                 // 显示关闭按钮
-                                _this.dom_close_box.fadeIn(200);
+                                if (_this.dom_bg_layer.css("opacity") === "0") {
+                                    _this.dom_close_box.fadeIn(200);
+                                }
 
                                 var i = 1,
                                     len = _this.Paras.Pics.length;
