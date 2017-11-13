@@ -1,5 +1,5 @@
 /*
-    2.5.1
+    2.5.2
     高京
     2016-10-25
 
@@ -709,7 +709,7 @@ function LayerShow() {
                             // _this.dom_image_loading_bg.clone()
                             //     .appendTo(li);
                             _this.dom_image_loading.clone()
-                                .attr("imgPath", imgPath + "1")
+                                .attr("imgPath", imgPath)
                                 .appendTo(li);
                         }
 

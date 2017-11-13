@@ -69,6 +69,10 @@ requireJS引用
 
 更新历史：
 -------------
+v2.5.2
+
+		修改了个小bug
+
 v2.5.1
 
 		增加参数 Pics_preload_all: showKind=1时有效。图片预加载所有大图，移动端建议false(以免图片加载太多影响打开)，pc端建议true(ie不支持svg)。默认true。
