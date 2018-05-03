@@ -1,4 +1,4 @@
-# LayerShow 插件 v2.5.3
+# LayerShow 插件 v2.5.4
 ### 弹层显示图片（支持多张）或图文内容
 ### 安装：npm install TopuNet-LayerShow
 
@@ -69,6 +69,11 @@ requireJS引用
 
 更新历史：
 -------------
+v2.5.4
+
+		* 图片盒由absolute改为fixed
+		* 显示图片时，对li的监听由插入li改到图片加载完成后
+
 v2.5.3
 
 		修改了个小bug

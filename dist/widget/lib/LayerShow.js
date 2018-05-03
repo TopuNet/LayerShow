@@ -1,8 +1,7 @@
 /*
-    2.5.3
+    2.5.4
     高京
     2016-10-25
-
     this = {
         dom_bg_layer: 背景层,
         dom_info_box: 内容层,
@@ -83,7 +82,7 @@ function LayerShow() {
             // 图片层
             _this.dom_image_box = $(document.createElement("div"))
                 .css({
-                    "position": "absolute",
+                    "position": "fixed",
                     "overflow": "hidden",
                     "top": "0",
                     "left": "0"
@@ -495,8 +494,6 @@ function LayerShow() {
                 _this.Paras.Pics_scale_fit = true;
             }
 
-
-
             // 看有没有创建dom
             if (!_this.dom_bg_layer)
                 _this.create_dom.apply(_this);
@@ -526,7 +523,7 @@ function LayerShow() {
                     }
 
                     // 对插入的li的监听
-                    var li_Listener = function(li) {
+                    var li_Listener = function(li_obj) {
 
                         // 鼠标开始位置
                         var position_start = null;
@@ -538,7 +535,7 @@ function LayerShow() {
                         var position_new = null;
 
                         // li_obj
-                        var li_obj = $(li);
+                        // var li_obj = $(li);
 
                         // div
                         var div = li_obj.find("div");
@@ -650,6 +647,8 @@ function LayerShow() {
                             });
                         } else {
 
+                            var li = li_obj[0];
+
                             li.addEventListener("touchstart", function(e) {
                                 e.preventDefault();
 
@@ -701,7 +700,7 @@ function LayerShow() {
 
                     };
 
-                    // 插入li到ul，插入图片容器div到li。监听li
+                    // 插入li到ul，插入图片容器div到li。
                     var insert_li = function(imgPath) {
                         var li = _this.dom_image_li.clone();
 
@@ -724,9 +723,7 @@ function LayerShow() {
                             })
                             .appendTo(_this.dom_image_ul);
 
-                        li_Listener(li[0]);
-
-                        setTimeout(function() {}, 1000);
+                        // setTimeout(function() {}, 1000);
                     };
 
                     // 图片加载成功后的回调（获得图片组中显示大小）
@@ -782,6 +779,9 @@ function LayerShow() {
                                     "background-size": background_size
                                 });
                             }
+
+                            // 监听li
+                            li_Listener(li_now);
 
                             // 显示图片，隐藏loading
                             div.fadeIn(200);
